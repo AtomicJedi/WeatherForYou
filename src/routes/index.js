@@ -1,9 +1,10 @@
-import express from 'express';
+const { Router } = require('express');
+const routes = Router()
 
-const routes  = express.Router();
 
 routes.get('/', (req, res) => {
-  res.status(200).json({ message: 'Ok' });
+  // res.status(200).json({ message: 'Ok' });
+  res.render('index')
 });
 
 routes.use(function(req, res) {

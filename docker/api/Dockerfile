@@ -1,4 +1,4 @@
-FROM node:lts
+FROM node:10
 
 WORKDIR /home/node/app
 COPY *.json /home/node/app/
