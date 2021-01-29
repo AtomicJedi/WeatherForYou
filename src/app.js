@@ -1,13 +1,15 @@
-import express from 'express';
+const express = require('express');
+const path = require('express');
 import bodyParser from 'body-parser';
-import jwt from'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 import config from 'config';
 import db from './db/db';
-import routes from './routes';
+const routes = require('./routes');
 
 const exphbs = require('express-handlebars')
 
+// console.log(routes);
 
 const app = express();
 const hbs = exphbs.create({
@@ -17,19 +19,20 @@ const hbs = exphbs.create({
 
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
-app.set('view view')
-
+app.set('views', __dirname + '/views')
 app.use(routes)
+
+app.use('./css', express.static(__dirname + './node_modules/bootstrap/dist/css'))
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/', routes);
+// app.use('/', routes);
 
 const port = process.env.PORT || config.server.port;
 
 app.listen(port);
 
-console.log('Node + Express REST API skeleton server started on port: ' + port);
+console.log('Node + Express REST API server ALIVE on port: ' + port);
 
 module.exports = app;
