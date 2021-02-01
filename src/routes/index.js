@@ -11,9 +11,16 @@ const hbs = exphbs.create({
 // });
 
 routes.get('/', (req, res) => {  
-res.render('index')
+res.render('index',{
+  title: 'Log in'
+})
 });
 
+routes.get('/registration', (req, res) => {  
+  res.render('registration',{
+    title: 'Registration'
+  })
+  });
 
 routes.use(function(req, res) {
   res.status(404).send('Not found');

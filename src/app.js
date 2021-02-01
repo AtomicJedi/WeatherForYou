@@ -1,12 +1,12 @@
 const express = require('express');
-const path = require('express');
+const path = require('path');
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
 
 import config from 'config';
 import db from './db/db';
 const routes = require('./routes');
-
+const routerB = express.Router()
 const exphbs = require('express-handlebars')
 
 // console.log(routes);
@@ -20,9 +20,8 @@ const hbs = exphbs.create({
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
 app.set('views', __dirname + '/views')
-app.use(routes)
 
-app.use('./css', express.static(__dirname + './node_modules/bootstrap/dist/css'))
+app.use(routes)
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
