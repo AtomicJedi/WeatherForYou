@@ -1,14 +1,16 @@
 <style>
-        * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-.container-Registration{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .container-Registration {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .form-group {
         margin-bottom: 15px;
     }
@@ -73,10 +75,12 @@
 </style>
 
 <div class="container-Registration">
+    {{> logo}}
+
     <h2 class="position-Registration">Registration</h2>
 
     <div class="row main-form">
-        <form class="" method="post" >
+        <form class="" method="post">
 
 
 
@@ -103,9 +107,19 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="confirm" id="confirm"
+                            placeholder="Confirm your Password" />
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group ">
-                <a href="/" type="button" id="button"
-                    class="btn btn-primary btn-lg btn-block login-button">Register</a>
+                <a href="/" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Register</a>
             </div>
 
         </form>
