@@ -1,8 +1,8 @@
 import Sequelize from 'sequelize';
 import config from 'config';
 
-const sequelize = new Sequelize(`${config.database.url}`,{
+const sequelize = new Sequelize(`${config.get('database.url')}`,{
     dialect: "postgres"
 });
 
-exports.db = sequelize;
+module.exports = sequelize;

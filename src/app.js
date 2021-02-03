@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-import bodyParser from 'body-parser';
+const bodyParser = require('body-parser');
 import jwt from 'jsonwebtoken';
 
 import config from 'config';

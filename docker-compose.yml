@@ -37,7 +37,10 @@ services:
     container_name: express_postgres_api_1
     environment:
       - NODE_ENV=dev
+      - DB_USER=artemkabanov
+      - DB_PASSWORD=HareKrishna108
       - DB_HOST=db
+      - DB_DATABASE=nodelogin
     volumes:
       - ./src:/home/node/app/src
     ports:
