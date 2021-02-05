@@ -8,19 +8,23 @@ const users = sequelize.define("users", {
     primaryKey: true,
     allowNull: false
   },
-
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   email: {
     type: Sequelize.STRING,
     allowNull: false,
     unique: true
   },
+
   password: {
     type: Sequelize.STRING,
     allowNull: false
   },
 });
 
-sequelize.sync().then(result=>console.log(result))
-.catch(err=> console.log(err))
+sequelize.sync().then(result => console.log(result))
+  .catch(err => console.log(err))
 
 module.exports = users;

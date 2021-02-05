@@ -103,7 +103,7 @@
     <H2 class="login-position">Log in</H2>
 
     <div class="row main-form">
-        <form class="" method="post" action="#">
+        <form class="" method="post" action="/">
 
 
 
@@ -131,9 +131,16 @@
             </div>
             <a href="/registration" id="reg-link" class="link">Registration</a>
             <div class="form-group ">
-                <a href="/weatherPage" type="button" id="button-success" class="btn btn-success">Login</a>
+                <button id="button-success" class="btn btn-success">Login</button>
             </div>
 
         </form>
+
+        {{#each errorsLogin}}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+        {{/each}}
+
     </div>
 </div>

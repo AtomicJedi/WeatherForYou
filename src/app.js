@@ -2,11 +2,10 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 import jwt from 'jsonwebtoken';
-
+const session = require('express-session')
 import config from 'config';
 import db from './db/db';
 const routes = require('./routes');
-const routerB = express.Router()
 const exphbs = require('express-handlebars')
 
 // console.log(routes);
@@ -16,6 +15,12 @@ const hbs = exphbs.create({
     defaultLayout: 'main',
     extname: 'hbs'
 })
+
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false
+}))
 
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
