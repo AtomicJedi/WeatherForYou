@@ -3,6 +3,9 @@ const routes = Router()
 const exphbs = require('express-handlebars')
 const bcrypt = require('bcrypt')
 const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
+const {jwtSecret} = require('../config/configOther')
+
 
 const user = require('../db/models/users')
 
@@ -15,11 +18,14 @@ const hbs = exphbs.create({
 	defaultLayout: 'main',
 	extname: 'hbs'
 })
-// routes.get('/', (req, res) => {
-//   res.status(200).json({ message: 'Ok' });
-// });
 
-
+const generateTocken = (id, email) => {
+	const filling = {
+		id,
+		email
+	}
+	return jwt.sign(filling, jwtSecret, {expiresIn: '1h'})
+}
 
 routes.get('/', (req, res) => {
 	res.render('index', {
@@ -29,46 +35,53 @@ routes.get('/', (req, res) => {
 
 routes.post('/', async (req, res) => {
 	let { email, password } = req.body;
+	let errorsLogin = []
 
-	console.log({ email, password });
-
+	// Authorization
 	try {
-		await user.findOne({ where: { email: email, password: password } })
-			.then(user => {
-				let errorsLogin = []
-				if (!user) {
-					errorsLogin.push( { message: "Login or password is wrong" } )
-							res.render('index', { errorsLogin });}
-				
-				
-				if (user.email === email, user.password === password) {
-					res.render('weatherPage', {
-						title: 'weatherPage'
-					})
-				}
-				console.log(user.email, user.password);
-			}).catch(err => console.log(err));
+
+		const usr = await user.findOne({ where: { email: email } });
+
+		const token = generateTocken(usr.id, usr.email)
+		// let errorsLogin = []
+		if (!usr) {
+			errorsLogin.push( { message: "Login or password is wrong" } )
+			res.status(401).redirect('index', { errorsLogin });
+		}
+		if(!bcrypt.compareSync(password,usr.password)){
+			errorsLogin.push( { message: "Login or password is wrong" } )
+			res.status(401).redirect('index', { errorsLogin });
+		}
+
+		res.header('Token', token)
+		req.session.auth = token
+		res.redirect('/weatherPage')
+		return res.json({token})
 
 	} catch (error) {
-		let errors = [];
-		errors.push(error)
-		res.redirect('/', { errors });
+		console.log(error);
+		let errorsLogin = []
+		errorsLogin.push({message: "Server ERROR"})
+		res.status(500).render('index', { errorsLogin });
 	}
+});
 
+routes.get('/weatherPage', (req, res) => {
+	try {
+		let token = req.session.auth; 
+		if(!token) token = req.headers;
+		if(!token) throw new Error("Unauthorized");
 
-
-}
-)
-
-
-// user.findOne({ where: { name: "Tom" } })
-// 	.then(user => {
-// 		if (!user) return;
-// 		console.log(user.name, user.age);
-// 	}).catch(err => console.log(err));
-
-
-
+		if(jwt.verify(token, jwtSecret)){
+			res.header('Authorization', token)
+			res.render('weatherPage', {
+				title: 'weatherPage'
+			})
+		}
+	} catch (error) {
+		res.send(error)
+	}
+});
 
 routes.get('/registration', async (req, res) => {
 	res.render('registration', {
@@ -76,6 +89,7 @@ routes.get('/registration', async (req, res) => {
 	})
 });
 
+// Registration
 routes.post('/registration', async (req, res) => {
 	let { email, name, password, confirm } = req.body;
 
@@ -105,20 +119,25 @@ routes.post('/registration', async (req, res) => {
 }
 );
 
-routes.get('/weatherPage', (req, res) => {
-	res.render('weatherPage', {
-		title: 'weatherPage'
-	})
-});
-
 routes.get('/favorites', (req, res) => {
 	res.render('favorites', {
 		title: 'favorites'
 	})
 });
 
+routes.get('/test', (req,res)=>{
+	try {
+		const {authorization} = req.headers;
+		jwt.verify(authorization, jwtSecret);
+		res.send('ok')
+	} catch (error) {
+		res.send('not ok')
+	}
+})
+
 routes.use(function (req, res) {
 	res.status(404).send('Not found');
 });
+
 
 module.exports = routes;

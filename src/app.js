@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-import jwt from 'jsonwebtoken';
 const session = require('express-session')
 import config from 'config';
 import db from './db/db';
@@ -17,7 +16,12 @@ const hbs = exphbs.create({
 })
 
 app.use(session({
-    secret: 'secret',
+    secret: 'Shtopor',
+    cookie: {
+        path:'/',
+        httpOnly: true,
+        maxAge: 60 * 60 * 1000,
+    },
     resave: false,
     saveUninitialized: false
 }))
