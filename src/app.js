@@ -6,6 +6,7 @@ import config from 'config';
 import db from './db/db';
 const routes = require('./routes');
 const exphbs = require('express-handlebars')
+const {sessionSecret} = require('./config/configOther')
 
 // console.log(routes);
 
@@ -16,7 +17,7 @@ const hbs = exphbs.create({
 })
 
 app.use(session({
-    secret: 'Shtopor',
+    secret: sessionSecret,
     cookie: {
         path:'/',
         httpOnly: true,

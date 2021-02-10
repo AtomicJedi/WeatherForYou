@@ -1,1 +1,86 @@
 {{> navBar}}
+{{#each errorResponse}}
+<div class="alert alert-danger" role="alert">
+    {{message}}
+</div>
+{{/each}}
+
+<style>
+    .containerForCards {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .card {
+        border-radius: 2px;
+        background-color: #009edf;
+    }
+
+    .list-group-item {
+        margin: 5px;
+    }
+
+    .card-title {
+        text-align: center;
+    }
+
+    .form-group input[type="checkbox"] {
+        display: none;
+    }
+
+    .form-group input[type="checkbox"]+.btn-group>label span {
+        width: 20px;
+    }
+
+    .form-group input[type="checkbox"]+.btn-group>label span:first-child {
+        display: none;
+    }
+
+    .form-group input[type="checkbox"]+.btn-group>label span:last-child {
+        display: inline-block;
+    }
+
+    .form-group input[type="checkbox"]:checked+.btn-group>label span:first-child {
+        display: inline-block;
+    }
+
+    .form-group input[type="checkbox"]:checked+.btn-group>label span:last-child {
+        display: none;
+    }
+
+    .btn-success {
+        padding: 3px 6px;
+        background-color: #009edf;
+        border-color: #009edf;
+        margin-left: 20px;
+        margin-right: -59px;
+    }
+</style>
+
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">{{CityName}}<button id="button-success" class="btn btn-success">&#127775;</button></h5>
+        {{#each icon}}
+        <p class="card-text">
+            {{id}}
+            {{main}}
+            {{description}}
+            {{icon}}
+        </p>
+        {{/each}}
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">&#127777;{{temp}}</li>
+        <li class="list-group-item">&#127777;&#8779; {{feels_like}}</li>
+        <li class="list-group-item">{{pressure}}</li>
+        <li class="list-group-item">{{humidity}}</li>
+        <li class="list-group-item">&#127788;{{wind}}</li>
+
+    </ul>
+    <div class="card-body">
+        </label>
+    </div>
+
+</div>
+
+</div>

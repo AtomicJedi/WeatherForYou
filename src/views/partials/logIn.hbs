@@ -101,19 +101,28 @@
 
 <div class="containerLogin">
     <H2 class="login-position">Log in</H2>
-
+        {{#each errorsClient}}
+        <div class="alert alert-info" role="alert">
+            {{message}}
+        </div>
+        {{/each}}
     <div class="row main-form">
+
         <form class="" method="post" action="/">
-
-
-
             <div class="form-group">
                 <label for="email" class="cols-sm-2 control-label">Your Email/Login</label>
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" name="email" id="email"
-                            placeholder="Enter your Email" />
+												<input 
+													type="text" 
+													class="form-control" 
+													name="email" 
+													id="email"
+													placeholder="Enter your Email"
+													pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{1,}[.]{1}[a-zA-Z]{2,}"
+													title="Email should be like are: rubi@gmail.com"
+												/>
                     </div>
                 </div>
             </div>
