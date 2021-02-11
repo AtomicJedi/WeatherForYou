@@ -5,6 +5,13 @@
 </div>
 {{/each}}
 
+{{#each cityFavoritesBox}}
+<div class="alert alert-success" role="alert">
+    {{MyFavoriteCity}} add to favorites
+</div>
+{{/each}}
+
+
 <style>
     .containerForCards {
         display: flex;
@@ -19,6 +26,14 @@
     .list-group-item {
         margin: 5px;
     }
+
+    .card-body {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+
 
     .card-title {
         text-align: center;
@@ -52,29 +67,31 @@
         padding: 3px 6px;
         background-color: #009edf;
         border-color: #009edf;
-        margin-left: 20px;
-        margin-right: -59px;
+        margin-left: 7px;
     }
 </style>
 
+{{#if weather}}
+{{!-- {{#each json}} --}}
 <div class="card" style="width: 18rem;">
     <div class="card-body">
-        <h5 class="card-title">{{CityName}}<button id="button-success" class="btn btn-success">&#127775;</button></h5>
-        {{#each icon}}
-        <p class="card-text">
-            {{id}}
-            {{main}}
-            {{description}}
-            {{icon}}
-        </p>
-        {{/each}}
+        <form action="/weatherPage" method="post">
+            <input name="FavoriteCity" style="display: none;" value="{{weather.name}}" type="text" />
+            <button id="button-success" class="btn btn-success">&#127775;</button>
+        </form>
+        <h5 class="card-title">
+            {{weather.name}}
+        </h5>
+
+        <img src="http://api.openweathermap.org/img/w/{{icon}}.png" class="card-img-top" alt="imege weather" />
+
     </div>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item">&#127777;{{temp}}</li>
-        <li class="list-group-item">&#127777;&#8779; {{feels_like}}</li>
-        <li class="list-group-item">{{pressure}}</li>
-        <li class="list-group-item">{{humidity}}</li>
-        <li class="list-group-item">&#127788;{{wind}}</li>
+
+        <li class="list-group-item">&#127777; {{temp}}&#8451;</li>
+        <li class="list-group-item">&#127777;&#8779; {{feels_like}}&#8451;</li>
+        <li class="list-group-item">&#32;Ра {{weather.main.pressure}}</li>
+        <li class="list-group-item">&#32;&#127788; {{weather.wind.speed}} m/sec</li>
 
     </ul>
     <div class="card-body">
@@ -82,5 +99,5 @@
     </div>
 
 </div>
-
-</div>
+{{!-- {{/each}} --}}
+{{/if }}

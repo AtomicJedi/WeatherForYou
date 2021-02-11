@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const fetch = require('node-fetch');
 const { jwtSecret, weatherKey } = require('../config/configOther')
 const user = require('../db/models/users')
+const favorites = require('../db/models/favoriteCities')
 
 
 
@@ -96,35 +97,47 @@ routes.get('/registration', async (req, res) => {
 });
 
 routes.post('/weatherPage', async (req, res) => {
-	let {Search} = req.body
-	try{
-		await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${Search}&appid=c1afe0e25457bce885930e01a0eb7d27`, {
-			method: 'post',
-			body:    JSON.stringify(Search),
-			headers: { 'Content-Type': 'application/json' },
-		})
-		.then(res => res.json())
-		.then(json => {
-			res.render('weatherPage', {
-				CityName: json.name,
-				temp: json.main.temp,
-				feels_like: json.main.feels_like,
-				pressure: json.main.pressure,
-				humidity: json.main.humidity,
-				icon: json.weather,
-				wind: json.wind.speed
+	let { Search, FavoriteCity } = req.body
 
+	try {
+
+		if (Search) {
+
+			await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${Search}&appid=c1afe0e25457bce885930e01a0eb7d27`, {
+				method: 'post',
+				body: JSON.stringify(Search),
+				headers: { 'Content-Type': 'application/json' },
 			})
-			console.log(json.name)
-		} );
-	} catch(error){
+				.then(res => res.json())
+				.then(json => {
+					if (res.status(200)) {
+						let weather = json
+						res.render('weatherPage', {
+							weather,
+							CityName: json.name,
+							temp: Math.round(json.main.temp - 273),
+							feels_like: Math.round(json.main.feels_like - 273),
+							icon: json.weather[0].icon,
+
+						})
+					}
+				});
+		}
+		if (FavoriteCity) {
+			let city = FavoriteCity
+			let cityFavoritesBox = []
+			console.log(cityFavoritesBox)
+			await favorites.create({city})
+			cityFavoritesBox.push({ MyFavoriteCity: FavoriteCity })
+			res.render('weatherPage', { cityFavoritesBox })
+		}
+
+	} catch (error) {
 		let errorResponse = []
 		errorResponse.push({ message: "Something wrong... Try one more time!" })
 		res.render('weatherPage', { errorResponse })
 		console.log(error);
 	}
-
-	// console.log({Search})
 })
 
 // Registration
