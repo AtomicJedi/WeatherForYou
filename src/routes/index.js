@@ -71,6 +71,83 @@ routes.post('/', async (req, res) => {
 
 });
 
+routes.get('/favorites', async (req, res) => {
+
+	let city = await favorites.findAll({ raw: true })
+
+	let favoriteCityList = [];	
+	
+	city.map(item => {
+		try {
+			if (item) {
+				fetch(`http://api.openweathermap.org/data/2.5/weather?q=${item.city}&appid=c1afe0e25457bce885930e01a0eb7d27`, {
+					method: 'post',
+					body: JSON.stringify(city),
+					headers: { 'Content-Type': 'application/json' },
+				})
+				.then(res => res.json())
+				.then(json => {
+					
+					
+					
+					if (res.status(200)) {
+						
+						let favoriteCity = {
+							CityName: json.name,
+							temp: Math.round(json.main.temp - 273),
+							feels_like: Math.round(json.main.feels_like - 273),
+							pressure: json.main.pressure,
+							windSpeed: json.wind.speed,
+							icon: json.weather[0].icon,
+						};
+							favoriteCityList.push({})
+							console.log(favoriteCityList);
+							res.render('favorites', {
+								favoriteCityList
+							})
+						}
+					});
+			
+
+					
+
+
+			}
+
+		} catch (error) {
+			let FavoritPostERROR = []
+			FavoritGetERROR.push({ message: 'Not Found city' })
+			res.render('favorites', { FavoritPostERROR })
+		}
+	}
+
+	)
+
+});
+// console.log(favoriteCity);
+
+
+// )   .catch( err => {
+
+// 	let FavoritGetERROR = []
+// 	FavoritGetERROR.push({message: 'Pleace add cities in favorites'})
+// 	res.render('favorites', {FavoritGetERROR})}
+
+// 	);
+// 	}
+
+
+
+
+// } catch (error) {
+// 	let favoritesERROR = []
+// 	favoritesERROR.push({ message: 'Server or Data base ERROR. Refresh page plece.' })
+// }
+
+// }
+
+
+
 routes.get('/weatherPage', (req, res) => {
 	try {
 		let token = req.session.auth;
@@ -127,7 +204,7 @@ routes.post('/weatherPage', async (req, res) => {
 			let city = FavoriteCity
 			let cityFavoritesBox = []
 			console.log(cityFavoritesBox)
-			await favorites.create({city})
+			await favorites.create({ city })
 			cityFavoritesBox.push({ MyFavoriteCity: FavoriteCity })
 			res.render('weatherPage', { cityFavoritesBox })
 		}
@@ -170,11 +247,6 @@ routes.post('/registration', async (req, res) => {
 }
 );
 
-routes.get('/favorites', (req, res) => {
-	res.render('favorites', {
-		title: 'favorites'
-	})
-});
 
 // routes.get('/test', (req, res) => {
 // 	try {
@@ -192,3 +264,46 @@ routes.use(function (req, res) {
 
 
 module.exports = routes;
+
+
+// for (let city of cityList){
+// 	console.log(city.city);
+// 		try {
+// 			if (city.city) {
+// 				fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city.city}&appid=c1afe0e25457bce885930e01a0eb7d27`, {
+// 					method: 'post',
+// 					body: JSON.stringify(city),
+// 					headers: { 'Content-Type': 'application/json' },
+// 				})
+// 					.then(res => res.json())
+// 					.then(json => {
+// 						if (res.status(200)) {
+
+// 						let favoriteCity = {
+// 							CityName: json.name,
+// 							temp: Math.round(json.main.temp - 273),
+// 							feels_like: Math.round(json.main.feels_like - 273),
+// 							pressure: json.main.pressure,
+// 							windSpeed: json.wind.speed,
+// 							icon: json.weather[0].icon,
+// 						};
+// 							favoriteCityList.push(favoriteCity)
+// 							console.log(favoriteCityList);
+
+// 						}
+// 						if(favoriteCityList.length > 0)
+// 						res.render('favorites', {
+// 							favoriteCityList
+// 						})
+// 					});
+
+
+// 			}
+
+// 		} catch (error) {
+// 			let FavoritPostERROR = []
+// 			FavoritGetERROR.push({ message: 'Not Found city' })
+// 			res.render('favorites', { FavoritPostERROR })
+// 		}
+
+// 	}

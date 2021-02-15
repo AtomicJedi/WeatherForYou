@@ -1,1 +1,88 @@
 {{> navBar}}
+
+{{#each FavoritGetERROR}}
+<div class="alert alert-success" role="alert">
+    {{message}}
+</div>
+{{/each}}
+
+{{#each FavoritPostERROR}}
+<div class="alert alert-success" role="alert">
+    {{message}}
+</div>
+{{/each}}
+
+<style>
+    .containerForCards {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .card {
+        margin: 10px;
+        border-radius: 2px;
+        background-color: #009edf;
+    }
+
+    .list-group-item {
+        margin: 5px;
+    }
+
+    .card-body {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .card-title {
+        text-align: center;
+    }
+
+    .form-group input[type="checkbox"] {
+        display: none;
+    }
+
+    .form-group input[type="checkbox"]+.btn-group>label span {
+        width: 20px;
+    }
+
+    .form-group input[type="checkbox"]+.btn-group>label span:first-child {
+        display: none;
+    }
+
+    .form-group input[type="checkbox"]+.btn-group>label span:last-child {
+        display: inline-block;
+    }
+
+    .form-group input[type="checkbox"]:checked+.btn-group>label span:first-child {
+        display: inline-block;
+    }
+
+    .form-group input[type="checkbox"]:checked+.btn-group>label span:last-child {
+        display: none;
+    }
+
+    .btn-success {
+        padding: 3px 6px;
+        background-color: #009edf;
+        border-color: #009edf;
+        margin-left: 7px;
+    }
+    .weatherCardList{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+</style>
+
+{{#if favoriteCityList}}
+<Ul class="weatherCardList">
+{{#each favoriteCityList}}
+
+{{> cardCity}}
+
+{{/each }}
+</Ul>
+{{/if }}

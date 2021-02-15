@@ -1,20 +1,11 @@
-{{!-- <style>
-  .card {
-    border-radius: 2px;
-    background-color: #009edf;
-  }
-</style> --}}
-
-{{!-- {{#if weather}}
 <div class="card" style="width: 18rem;">
     <div class="card-body">
-        <form action="/weatherPage" method="post">
-            <input name="FavoriteCity" style="display: none;" value="{{weather.name}}" type="text" />
-            <button id="button-success" class="btn btn-success">&#127775;</button>
-        </form>
+
+
         <h5 class="card-title">
-            {{weather.name}}
+          {{CityName}}
         </h5>
+
 
         <img src="http://api.openweathermap.org/img/w/{{icon}}.png" class="card-img-top" alt="imege weather" />
 
@@ -23,8 +14,8 @@
 
         <li class="list-group-item">&#127777; {{temp}}&#8451;</li>
         <li class="list-group-item">&#127777;&#8779; {{feels_like}}&#8451;</li>
-        <li class="list-group-item">&#32;Ра {{weather.main.pressure}}</li>
-        <li class="list-group-item">&#32;&#127788; {{weather.wind.speed}} m/sec</li>
+        <li class="list-group-item">&#32;Ра {{pressure}}</li>
+        <li class="list-group-item">&#32;&#127788; {{windSpeed}} m/sec</li>
 
     </ul>
     <div class="card-body">
@@ -32,4 +23,3 @@
     </div>
 
 </div>
-{{/if }} --}}
