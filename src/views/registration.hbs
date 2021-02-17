@@ -86,17 +86,9 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                        <input 
-                        	type="text" 
-                        	class="form-control" 
-                        	name="name" 
-                        	id="name" 
-                        	placeholder="Enter your Name" 
-                        	pattern="[a-zA-Z0-9]+" 
-                        	minlength="2" 
-                        	maxlength="32"
-													title="Username should only contain lowercase or upper letters on English."
-												/>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Enter your Name"
+                            pattern="[a-zA-Z0-9]+" minlength="2" maxlength="32"
+                            title="Username should only contain lowercase or upper letters on English." />
                     </div>
                 </div>
             </div>
@@ -106,15 +98,9 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                        <input 
-													type="text" 
-													class="form-control" 
-													name="email" 
-													id="email"
-                        	placeholder="Enter your Email" 
-											  	pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{1,}[.]{1}[a-zA-Z]{2,}"
-													title="Email should be like are: rubi@gmail.com"
-											  />
+                        <input type="text" class="form-control" name="email" id="email" placeholder="Enter your Email"
+                            pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{1,}[.]{1}[a-zA-Z]{2,}"
+                            title="Email should be like are: rubi@gmail.com" />
                     </div>
                 </div>
             </div>
@@ -126,7 +112,11 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                         <input type="password" class="form-control" name="password" id="password"
-                            placeholder="Enter your Password" />
+                            minlength="6" 
+                            maxlength="32"
+                            placeholder="Enter your Password" 
+                            title="Enter your password. Minimum 6 chars."
+                        />
                     </div>
                 </div>
             </div>

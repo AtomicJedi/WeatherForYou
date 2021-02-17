@@ -1,17 +1,13 @@
+
 <div class="card" style="width: 18rem;">
     <div class="card-body">
 
-        <form method="post">
-            <input name="CityName" style="display: none;" value="{{CityName}}" type="text" />
-            <button id="button-success" class="btn btn-success">&#127760;</button>
-        </form>
-
         <h5 class="card-title">
-          {{CityName}}
+            {{CityName}}
         </h5>
 
-
         <img src="http://api.openweathermap.org/img/w/{{icon}}.png" class="card-img-top" alt="imege weather" />
+        <span>{{time}}</span>
 
     </div>
     <ul class="list-group list-group-flush">

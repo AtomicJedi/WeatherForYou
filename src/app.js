@@ -33,11 +33,6 @@ app.set('views', __dirname + '/views')
 
 app.use(routes)
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-// app.use('/', routes);
-
 const port = process.env.PORT || config.server.port;
 
 app.listen(port);
