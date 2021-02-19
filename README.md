@@ -1,7 +1,5 @@
 # Node + Express + postgres template
 
-Заготовка для создания проектов на связке Express + postgres
-
 ## System Requirements
 
     Docker and docker-compose
